@@ -34,7 +34,9 @@ cargo build --release
 2 - Copy the executable to a directory in your system's PATH (e.g., /usr/local/bin/) to use the tool from anywhere in the command line.
 
 cp target/release/todo-list /usr/local/bin/
+
 or
+
 sudo cp target/release/todo-list /usr/local/bin/
 
 ## Usage
