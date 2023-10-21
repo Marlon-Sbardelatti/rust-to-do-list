@@ -18,24 +18,21 @@ fn main() {
         let file_path_tasks = home_dir.join("todo-list.txt");
         let file_path_marks = home_dir.join("marks.txt");
         if file_path_tasks.exists() && file_path_marks.exists() {
-            println!("File already exists.");
             run(&file_path_tasks, &file_path_marks);
         } else {
             // The file doesn't exist; create it
             match File::create(&file_path_tasks) {
                 Ok(_) => {
-                    println!("File created successfully.");
                 }
                 Err(err) => {
-                    println!("Failed to create the file: {}", err);
+                    println!("Failed to create the tasks file: {}", err);
                 }
             }
             match File::create(&file_path_marks) {
                 Ok(_) => {
-                    println!("File created successfully.");
                 }
                 Err(err) => {
-                    println!("Failed to create the file: {}", err);
+                    println!("Failed to create marks the file: {}", err);
                 }
             }
             run(&file_path_tasks, &file_path_marks);
@@ -66,7 +63,12 @@ fn run(file_path_tasks: &PathBuf, file_path_marks: &PathBuf) {
                     .expect("Failed to read user input");
 
                 let text_new_line = format!("{}", input);
-                add_task(file_path_tasks, file_path_marks, &text_new_line);
+                match add_task(file_path_tasks, file_path_marks, &text_new_line) {
+                    Ok(_) => {}
+                    Err(err) => {
+                        println!("Failed to add the task: {}", err);
+                    }
+                }
             }
             2 => {
                 println!("Type the task number to delete it:");
@@ -76,11 +78,21 @@ fn run(file_path_tasks: &PathBuf, file_path_marks: &PathBuf) {
                     .expect("Failed to read user input");
 
                 let input_num: usize = input_num.trim().parse().expect("Please type a number!");
-                remove_task(file_path_tasks, file_path_marks, input_num);
+                match remove_task(file_path_tasks, file_path_marks, input_num) {
+                    Ok(_) => {}
+                    Err(err) => {
+                        println!("Failed to remove the task: {}", err);
+                    }
+                }
             }
             3 => {
                 println!("Your tasks: ");
-                show_tasks(file_path_tasks, file_path_marks);
+                match show_tasks(file_path_tasks, file_path_marks) {
+                   Ok(_) => {} 
+                   Err(err) => {
+                       println!("Failed to show the tasks: {}" ,err);
+                   }
+                }
             }
             4 => {
                 println!("Type the task number to mark as done:");
@@ -90,7 +102,12 @@ fn run(file_path_tasks: &PathBuf, file_path_marks: &PathBuf) {
                     .expect("Failed to read user input");
 
                 let input_num: usize = input_num.trim().parse().expect("Please type a number!");
-                mark_done(file_path_marks, input_num);
+                match mark_done(file_path_marks, input_num) {
+                   Ok(_) => {} 
+                   Err(err) => {
+                       println!("Failed to mark task as done: {}", err);
+                   }
+                }
             }
             5 => {
                 break;
@@ -114,8 +131,6 @@ fn add_task(
 
     // Write the text to the file
     file.write_all(text.as_bytes())?;
-
-    println!("Text appended to the file.");
 
     let mut file = OpenOptions::new()
         .write(true)
@@ -165,10 +180,8 @@ fn remove_task(
         for mark in marks {
             writeln!(file2, "{}", mark)?;
         }
-
-        println!("Line removed and file updated.");
     } else {
-        println!("Line number is out of range.");
+        println!("Task number is out of range.");
     }
 
     Ok(())
@@ -230,9 +243,8 @@ fn mark_done(file_path_marks: &PathBuf, input_num: usize) -> io::Result<()> {
         for line in marks {
             writeln!(file, "{}", line)?;
         }
-        println!("Line removed and file updated.");
     } else {
-        println!("Line number is out of range.");
+        println!("Task number is out of range.");
     }
     Ok(())
 }
