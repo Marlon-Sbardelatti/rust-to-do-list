@@ -54,6 +54,34 @@ todo-list
 - 5 - Mark task as not done: Mark a task as not done.
 - 6 - Exit: Quit the application.
 
+
+Or use the flags:
+- -a or --add: Use this flag to add a new task to your to-do list.
+
+   Example:
+   td-list -a "Buy groceries"
+
+- -r or --remove: This flag lets you remove a task from your to-do list. Provide the task number as an argument.
+
+   Example: 
+   td-list -r 3
+
+- -m or --mark: Mark a task as done. You'll need to specify the task number to mark.
+
+   Example:
+   td-list -m 1
+
+- -u or --unmark: Unmark a previously marked task, making it incomplete again. Provide the task number to unmark.
+
+   Example:
+   td-list -u 2
+
+- -s or --show: Use this flag to display all your tasks.
+
+   Example:
+   td-list -s
+
+
 ## Configuration
 The application creates and uses two files (marks.txt and todo-list.txt) to store your tasks and marks. These files act as a simple database for your tasks.
 
