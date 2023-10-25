@@ -8,8 +8,3 @@ src/arg_handles.rs:
 src/args.rs:
 src/handles.rs:
 src/methods.rs:
-
-# env-dep:CARGO_PKG_AUTHORS=
-# env-dep:CARGO_PKG_DESCRIPTION=
-# env-dep:CARGO_PKG_NAME=td-list
-# env-dep:CARGO_PKG_VERSION=1.0.0

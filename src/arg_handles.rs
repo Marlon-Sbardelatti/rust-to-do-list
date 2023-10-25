@@ -1,14 +1,14 @@
 pub mod arg_handles {
     use crate::methods::methods::{add_task, mark_done, remove_task, show_tasks, mark_not_done};
-    use std::{path::PathBuf, io};
+    use std::path::PathBuf;
 
-    pub fn handle_add(file_path_tasks: &PathBuf, file_path_marks: &PathBuf) {
-        println!("Add your task: ");
-        let mut input = String::new();
-        io::stdin()
-            .read_line(&mut input)
-            .expect("Failed to read user input");
-        let text_new_line = format!("{}", input);
+    pub fn handle_add(file_path_tasks: &PathBuf, file_path_marks: &PathBuf, input: &String) {
+        // println!("Add your task: ");
+        // let mut input = String::new();
+        // io::stdin()
+        //     .read_line(&mut input)
+        //     .expect("Failed to read user input");
+        let text_new_line = format!("{}\n", input);
         match add_task(file_path_tasks, file_path_marks, &text_new_line) {
             Ok(_) => {}
             Err(err) => {
